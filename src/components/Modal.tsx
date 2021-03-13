@@ -1,42 +1,42 @@
-import React, { useCallback, useState,useImperativeHandle, forwardRef } from 'react';
+import React, { forwardRef, useCallback, useImperativeHandle, useState } from 'react';
 
 
 
-
-export interface ModalHandler{
+export interface ModalHandler {
     openModal: () => void
 }
 
-const Modal: React.ForwardRefRenderFunction<ModalHandler> = ({},ref) => {
+const Modal: React.ForwardRefRenderFunction<ModalHandler> = (props,ref) => {
+        
 
-    const [isOpen, setOpen] = useState(true);
-    
+    const [isOpen, setOpen] = useState(false)
+
+    const closeModal = useCallback(() =>{
+        setOpen(false)
+    } ,[]) 
+
     const openModal = useCallback(() => {
         setOpen(true)
-    },[])
+    }, [])
 
-    useImperativeHandle(ref,() => {
+    useImperativeHandle(ref, () => {
         return {
             openModal
         }
     })
 
-    const handleCloseModal = useCallback(() => {
-        setOpen(false)
-    },[])
 
-  
-    
-    return (
-        <>
-            {isOpen &&
-                <div>
-                    I'm modal
-                    <button type='button' onClick={handleCloseModal} >Close</button>
-                </div>
-                }
-        </>
-    );
+  return (
+      <>
+      {
+        isOpen &&   
+        <div>
+          Eu sou um modal
+          <button type="button" onClick={closeModal}>Fechar Modal</button>
+        </div>
+        }
+      </>
+  );
 }
 
 export default forwardRef(Modal);

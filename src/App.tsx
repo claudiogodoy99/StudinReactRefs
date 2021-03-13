@@ -1,35 +1,21 @@
-import { useCallback, useEffect, useRef } from "react";
-import Input from "./components/Input";
+import { useRef } from "react";
 import Modal, { ModalHandler } from "./components/Modal";
 
 function App() {
+  
+  const modalRefence = useRef<ModalHandler>(null)
 
-  const nameInputRef = useRef<HTMLInputElement>(null)
-
-  const modalRef= useRef<ModalHandler>(null);
-
-  const handleClick = (e: any) => {
-    e.preventDefault();
-    console.log(nameInputRef.current?.value)
+  const openModal= () => {
+      modalRefence.current?.openModal()
   }
 
-  const handleOpenModal = useCallback(() => {
-    modalRef.current?.openModal()
-  },[]) 
 
+ 
   return (
     <>
-    <Input
-      type="text"
-      placeholder="nome"
-      label="teste"
-      name="a"
-      ref={nameInputRef}
-    />
-
-      <button type="button" onClick={handleOpenModal} >Click</button>
-      <Modal  ref={modalRef} />
-    </>
+      <button type="button" onClick={openModal}> Click </button>
+      <Modal ref={modalRefence} />
+    </> 
 
   );
 }
